@@ -15,6 +15,12 @@ public class BookController {
     public BookController(BookService bookService){
         this.bookService = bookService;
     }
+
+    @GetMapping("secure/currentloans/count")
+    public int currentLoansCount(){
+        String userEmail = "asd@gmail.com";
+        return bookService.currentloansCount(userEmail);
+    }
     @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkedoutByUser(@RequestParam Long bookId){
         String userEmail = "asd@gmail.com";
