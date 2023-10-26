@@ -19,10 +19,11 @@ public class SecurityConfiguration {
 //         http.csrf().disable();
 
         // protect endpoints at /api/<type>/secure
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/books/secure/**").authenticated()
-                .anyRequest()
-                .permitAll());
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/books/secure/**").authenticated()
+                        .anyRequest().permitAll())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt());
 
         // Add Cors filters
         http.cors(Customizer.withDefaults());
