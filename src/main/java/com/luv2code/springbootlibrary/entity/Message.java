@@ -33,12 +33,8 @@ public class Message {
     public Message() {
     }
 
-    public Message(String userEmail, String title, String question, String adminEmail, String response, Boolean closed) {
-        this.userEmail = userEmail;
+    public Message(String title, String question) {
         this.title = title;
         this.question = question;
-        this.adminEmail = adminEmail;
-        this.response = response;
-        this.closed = closed;
     }
 }
