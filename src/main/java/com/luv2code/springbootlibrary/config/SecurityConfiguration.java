@@ -22,7 +22,8 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/books/secure/**"
-                                ,"/api/reviews/secure/**").authenticated()
+                                ,"/api/reviews/secure/**",
+                                "/api/messages/secure/**").authenticated()
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt());
 
