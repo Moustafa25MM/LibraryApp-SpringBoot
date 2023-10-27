@@ -84,4 +84,15 @@ public class BookService {
         return shelfCurrentLoansResponses;
 
     }
+    public void returnBook(String userEmail , long bookId) throws Exception {
+        Optional<Book> book = bookRepository.findById(bookId);
+        Checkout valiateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail,bookId);
+
+        if(book.isEmpty() || valiateCheckout == null ){
+            throw new Exception("Book doesn't exist or not CheckedOut By User");
+        }
+        book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
+        bookRepository.save(book.get());
+        checkoutRepository.deleteById(valiateCheckout.getId());
+    }
 }
