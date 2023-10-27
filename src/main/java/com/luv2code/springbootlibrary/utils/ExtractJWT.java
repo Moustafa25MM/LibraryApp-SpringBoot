@@ -31,6 +31,25 @@ public class ExtractJWT {
         return null;
     }
 
-
+    public static String extractUserType(String token) {
+        token = token.replace("Bearer", "").trim();
+        String[] chunks = token.split("\\.");
+        Base64.Decoder decoder = Base64.getDecoder();
+        String payload = new String(decoder.decode(chunks[1]));
+        String[] entries = payload.split(",");
+        for (String entry : entries) {
+            String[] keyValue = entry.split(":");
+            if (keyValue[0].equals("\"userType\"")) {
+                int remove = 1;
+                if (keyValue[1].endsWith("}")) {
+                    remove = 2;
+                }
+                keyValue[1] = keyValue[1].substring(0, keyValue[1].length() - remove);
+                keyValue[1] = keyValue[1].substring(1);
+                return keyValue[1];
+            }
+        }
+        return null;
+    }
 
 }
