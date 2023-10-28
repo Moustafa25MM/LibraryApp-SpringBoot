@@ -51,6 +51,6 @@ public class AdminController {
         if(admin == null || !admin.equals("admin")){
             throw new Exception("Admins Only!");
         }
-        adminService.increaseBookQuantity(bookId);
+        adminService.decreaseBookQuantity(bookId);
     }
 }
