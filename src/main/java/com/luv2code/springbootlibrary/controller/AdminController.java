@@ -25,6 +25,15 @@ public class AdminController {
         }
         adminService.postBook(addBookRequest);
     }
+    @DeleteMapping("/secure/delete/book")
+    public void deleteBook(@RequestHeader(value = "Authorization")String token,
+                           @RequestParam Long bookId) throws Exception {
+        String admin = ExtractJWT.extractUserType(token);
+        if(admin == null || !admin.equals("admin")){
+            throw new Exception("Admins Only!");
+        }
+        adminService.deleteBook(bookId);
+    }
 
     @PutMapping("/secure/increase/book/quantity")
     public void increaseBookQuantity(@RequestHeader(value = "Authorization")String token,
