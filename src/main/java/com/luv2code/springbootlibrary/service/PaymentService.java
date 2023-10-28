@@ -1,11 +1,14 @@
 package com.luv2code.springbootlibrary.service;
 
 import com.luv2code.springbootlibrary.dao.PaymentRepository;
+import com.luv2code.springbootlibrary.entity.Payment;
 import com.luv2code.springbootlibrary.requestmodels.PaymentInfoRequest;
 import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +38,15 @@ public class PaymentService {
         params.put("payment_method_types", paymentMethodTypes);
 
         return PaymentIntent.create(params);
+    }
+
+    public ResponseEntity<String> stripePayment(String userEmail) throws Exception{
+        Payment payment =  paymentRepository.findByUserEmail(userEmail);
+        if(payment == null){
+            throw new Exception("Payment Information is Missing!");
+        }
+        payment.setAmount(00.00);
+        paymentRepository.save(payment);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
