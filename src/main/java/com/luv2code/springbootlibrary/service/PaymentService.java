@@ -4,6 +4,7 @@ import com.luv2code.springbootlibrary.dao.PaymentRepository;
 import com.luv2code.springbootlibrary.entity.Payment;
 import com.luv2code.springbootlibrary.requestmodels.PaymentInfoRequest;
 import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +29,7 @@ public class PaymentService {
         this.paymentRepository = paymentRepository;
         Stripe.apiKey = secretKey;
     }
-    public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) throws Exception{
+    public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) throws StripeException {
         List<String> paymentMethodTypes = new ArrayList<>();
         paymentMethodTypes.add("card");
 
