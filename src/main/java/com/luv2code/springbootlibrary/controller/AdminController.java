@@ -35,4 +35,13 @@ public class AdminController {
         }
         adminService.increaseBookQuantity(bookId);
     }
+    @PutMapping("/secure/decrease/book/quantity")
+    public void decreaseBookQuantity(@RequestHeader(value = "Authorization")String token,
+                                     @RequestParam Long bookId) throws Exception {
+        String admin = ExtractJWT.extractUserType(token);
+        if(admin == null || !admin.equals("admin")){
+            throw new Exception("Admins Only!");
+        }
+        adminService.increaseBookQuantity(bookId);
+    }
 }
